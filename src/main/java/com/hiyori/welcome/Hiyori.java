@@ -23,6 +23,7 @@ public class Hiyori{
     public long CHANNEL_ID=0;
     public String TOKEN="";
     public String FOLDER="";
+    public int ROUNDED=0;
     private JDA jda;
     public Hiyori()
     {
@@ -36,7 +37,7 @@ public class Hiyori{
         {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(TOKEN)
-                    .addEventListener(new EventListener(SERVER_ID, CHANNEL_ID, FOLDER))
+                    .addEventListener(new EventListener(SERVER_ID, CHANNEL_ID, FOLDER, ROUNDED))
                     .buildBlocking();
         }
         catch (LoginException e)
@@ -66,8 +67,9 @@ public class Hiyori{
             SERVER_ID = obj.get("ServerID").getAsLong();
             CHANNEL_ID = obj.get("ChannelID").getAsLong();
             FOLDER = obj.get("Folder").getAsString();
+            ROUNDED = obj.get("Rounded").getAsInt();
 
-            System.out.println("T: " + TOKEN + " | SID: " + SERVER_ID + " | CID: " + CHANNEL_ID + " | F: " + FOLDER);
+            System.out.println("T: " + TOKEN + " | SID: " + SERVER_ID + " | CID: " + CHANNEL_ID + " | F: " + FOLDER + " | ROUND: " + ROUNDED);
         }
         catch (FileNotFoundException e)
         {

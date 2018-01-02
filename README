@@ -1,8 +1,16 @@
-This is a welcome banner bot for discord written in Java. 
+# This is a welcome banner bot for discord written in Java. 
 
 Dependencies are managed with gradle.
 
-Instructions:
+## Instructions:
 1. Plug your information into the config.json(Do not leave a comma after the last entry you casual)
 2. Upload some images to a folder defined in config.json.
 3. Build this shit and profit. 
+
+
+## Configuration file 
+Token: Your bot token
+Folder: The path or name of the folder that holds all of your banners. 
+ServerID: Server ID
+ChannelID: Channel ID
+Rounded: A binary value that decides whether the pfp is to be rounded or nah.

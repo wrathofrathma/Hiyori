@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -24,11 +25,13 @@ public class EventListener extends ListenerAdapter {
     public long CHANNEL_ID=0;
     public String FOLDER="";
     public File[] banners;
-    public EventListener(long server_id, long channel_id, String folder)
+    public int ROUNDED=0;
+    public EventListener(long server_id, long channel_id, String folder, int rounded)
     {
         SERVER_ID=server_id;
         CHANNEL_ID=channel_id;
         FOLDER=folder;
+        ROUNDED=rounded;
         loadFolderList();
     }
     public void loadFolderList()
@@ -62,14 +65,16 @@ public class EventListener extends ListenerAdapter {
 
             /* Downloading user's Avatar */
             String avatar_url = user.getAvatarUrl();
-            String username = user.getName();
+            if(avatar_url==null)
+            {
+                avatar_url = user.getDefaultAvatarUrl();
+            }
 
+            String username = user.getName();
             try{
                 /* Loading Welcome Banner */
                 BufferedImage banner = ImageIO.read(selectBanner());
-
                 URL url = new URL(avatar_url);
-
                 /* We have to spoof a web browser or we'll get hit with 403 access denied messages */
                 HttpURLConnection httpcon = (HttpURLConnection) url.openConnection();
                 httpcon.addRequestProperty("User-Agent","Mozilla/4.0");
@@ -78,9 +83,11 @@ public class EventListener extends ListenerAdapter {
 
                 /* Creating our scaled avatar */
                 BufferedImage scaled_avatar = new BufferedImage(95,
-                        95, img.getType());
+                        95, img.TYPE_INT_ARGB);
                 // scales the input image to the output image
                 Graphics2D g2d = scaled_avatar.createGraphics();
+                if(ROUNDED==1)
+                    g2d.setClip(new Ellipse2D.Float(0,0,95,95));
                 g2d.drawImage(img, 0, 0, 95, 95, null);
                 g2d.dispose();
                 input_stream.close();

@@ -2,5 +2,6 @@
     "Token": "TOKEN HERE",
     "Folder": "normal",
     "ServerID": SERVER ID HERE,
-    "ChannelID": CHANNEL ID HERE
+    "ChannelID": CHANNEL ID HERE,
+    "Rounded": 1
 }
