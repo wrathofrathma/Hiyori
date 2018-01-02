@@ -3,6 +3,6 @@ This is a welcome banner bot for discord written in Java.
 Dependencies are managed with gradle.
 
 Instructions:
-1. Plug your information into the config.json(Do not leave a comma after the last entry you casual.
+1. Plug your information into the config.json(Do not leave a comma after the last entry you casual)
 2. Upload some images to a folder defined in config.json.
 3. Build this shit and profit. 
