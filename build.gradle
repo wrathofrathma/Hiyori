@@ -1,0 +1,33 @@
+group 'trash'
+version '1.0-ALPHA'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+dependencies {
+    compile 'net.dv8tion:JDA:3.4.0_321'
+    compile 'com.google.code.gson:gson:2.8.2'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+sourceSets.main.java.srcDirs = ["src/main/java/"]
+
+
+task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+    from {configurations.compile.collect {zipTree(it)}}
+    manifest {
+        attributes(
+            'Class-Path': configurations.compile.collect {it.getName() }.join(' '), 'Main-Class': 'com.hiyori.welcome.Main'
+        )
+    }
+}
+
