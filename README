@@ -14,3 +14,34 @@ Folder: The path or name of the folder that holds all of your banners.
 ServerID: Server ID
 ChannelID: Channel ID
 Rounded: A binary value that decides whether the pfp is to be rounded or nah.
+Avatar_X/Y: Coordinates of the avatar.
+Text_X/Y: Coordinates of the username.
+Text_Color: Java awt color name. Colors supported are listed below.(Written EXACTLY as they must be in the field).
+
+## Supported Colors
+black
+BLACK
+blue
+BLUE
+cyan
+CYAN
+DARK_GRAY
+darkGray
+gray
+GRAY
+green
+GREEN
+LIGHT_GRAY
+lightGray
+magenta
+MAGENTA
+orange
+ORANGE
+pink
+PINK
+red
+RED
+white
+WHITE
+yellow
+YELLOW

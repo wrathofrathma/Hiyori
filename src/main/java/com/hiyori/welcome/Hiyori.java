@@ -87,7 +87,7 @@ public class Hiyori{
             /* Kind of annoying trying to convert strings to colors, but that's what's happening here */
             String color = obj.get("Text_Color").getAsString();
             System.out.println("Loading Text_Color: " + color);
-            TEXT_COLOR=(Color) Class.forName("java.awt.Color").getField(color.toLowerCase()).get(null);
+            TEXT_COLOR=(Color) Class.forName("java.awt.Color").getField(color).get(null);
             System.out.println("#### Banner Settings ####\n" + "Text_X: " + TEXT_X + " | Text_Y: " + TEXT_Y + " | Ava_X: " + AVATAR_X + " | Ava_Y: " + AVATAR_Y + " | Rounded: " + ROUNDED + " | Text Color:  "+ TEXT_COLOR);
         }
         catch (FileNotFoundException e)
