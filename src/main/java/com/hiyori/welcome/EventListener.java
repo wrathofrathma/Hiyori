@@ -26,12 +26,22 @@ public class EventListener extends ListenerAdapter {
     public String FOLDER="";
     public File[] banners;
     public int ROUNDED=0;
-    public EventListener(long server_id, long channel_id, String folder, int rounded)
+    public int TEXT_X=0;
+    public int TEXT_Y=0;
+    public int AVATAR_X=0;
+    public int AVATAR_Y=0;
+    public Color TEXT_COLOR=Color.WHITE;
+    public EventListener(long server_id, long channel_id, String folder, int rounded, int ava_x, int ava_y, int text_x, int text_y, Color color)
     {
         SERVER_ID=server_id;
         CHANNEL_ID=channel_id;
         FOLDER=folder;
         ROUNDED=rounded;
+        TEXT_X=text_x;
+        TEXT_Y=text_y;
+        AVATAR_X=ava_x;
+        AVATAR_Y=ava_y;
+        TEXT_COLOR=color;
         loadFolderList();
     }
     public void loadFolderList()
@@ -95,21 +105,22 @@ public class EventListener extends ListenerAdapter {
 
                 /* Let's add the user's name to the image */
                 Graphics graphics = banner.getGraphics();
+                graphics.setColor(TEXT_COLOR); //Set our color.
                 if(username.length()<=14) {
                     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-                    graphics.drawString(username, 240, 100);
+                                        graphics.drawString(username, TEXT_X, TEXT_Y);
                 }
                 else if(username.length()>14 && username.length()<=20) {
                     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 30));
-                    graphics.drawString(username, 240, 100);
+                    graphics.drawString(username, TEXT_X, TEXT_Y);
                 }
                 else if(username.length()>20) {
                     graphics.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-                    graphics.drawString(username, 240, 95);
+                    graphics.drawString(username, TEXT_X, TEXT_Y-5);
                 }
 
                 /* Let's add the user's avatar now */
-                graphics.drawImage(scaled_avatar, 720, 12, null);
+                graphics.drawImage(scaled_avatar, AVATAR_X, AVATAR_Y, null);
                 graphics.dispose();
 
                 /* I really don't like the idea of writing to disk, so we're just going to convert this to a byte array and call it a night */

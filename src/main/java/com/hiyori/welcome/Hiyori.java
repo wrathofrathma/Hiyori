@@ -12,6 +12,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.json.JSONObject;
 
 import javax.security.auth.login.LoginException;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -24,6 +25,12 @@ public class Hiyori{
     public String TOKEN="";
     public String FOLDER="";
     public int ROUNDED=0;
+    public int TEXT_X=0;
+    public int TEXT_Y=0;
+    public int AVATAR_X=0;
+    public int AVATAR_Y=0;
+    public Color TEXT_COLOR=Color.WHITE;
+
     private JDA jda;
     public Hiyori()
     {
@@ -37,7 +44,9 @@ public class Hiyori{
         {
             jda = new JDABuilder(AccountType.BOT)
                     .setToken(TOKEN)
-                    .addEventListener(new EventListener(SERVER_ID, CHANNEL_ID, FOLDER, ROUNDED))
+                    .addEventListener(new EventListener(SERVER_ID, CHANNEL_ID, FOLDER,
+                            ROUNDED, AVATAR_X, AVATAR_Y,
+                            TEXT_X, TEXT_Y, TEXT_COLOR))
                     .buildBlocking();
         }
         catch (LoginException e)
@@ -64,17 +73,33 @@ public class Hiyori{
             JsonObject obj = (JsonObject) parser.parse(new FileReader("config.json"));
 
             TOKEN = obj.get("Token").getAsString();
-            SERVER_ID = obj.get("ServerID").getAsLong();
-            CHANNEL_ID = obj.get("ChannelID").getAsLong();
+            SERVER_ID = obj.get("Server_ID").getAsLong();
+            CHANNEL_ID = obj.get("Channel_ID").getAsLong();
             FOLDER = obj.get("Folder").getAsString();
-            ROUNDED = obj.get("Rounded").getAsInt();
+            System.out.println("#### Bot Settings ####\n" + "T: " + TOKEN + " | SID: " + SERVER_ID + " | CID: " + CHANNEL_ID + " | F: " + FOLDER);
 
-            System.out.println("T: " + TOKEN + " | SID: " + SERVER_ID + " | CID: " + CHANNEL_ID + " | F: " + FOLDER + " | ROUND: " + ROUNDED);
+            ROUNDED = obj.get("Rounded").getAsInt();
+            TEXT_X= obj.get("Text_X").getAsInt();
+            TEXT_Y= obj.get("Text_Y").getAsInt();
+            AVATAR_X= obj.get("Avatar_X").getAsInt();
+            AVATAR_Y= obj.get("Avatar_Y").getAsInt();
+
+            /* Kind of annoying trying to convert strings to colors, but that's what's happening here */
+            String color = obj.get("Text_Color").getAsString();
+            System.out.println("Loading Text_Color: " + color);
+            TEXT_COLOR=(Color) Class.forName("java.awt.Color").getField(color.toLowerCase()).get(null);
+            System.out.println("#### Banner Settings ####\n" + "Text_X: " + TEXT_X + " | Text_Y: " + TEXT_Y + " | Ava_X: " + AVATAR_X + " | Ava_Y: " + AVATAR_Y + " | Rounded: " + ROUNDED + " | Text Color:  "+ TEXT_COLOR);
         }
         catch (FileNotFoundException e)
         {
             System.out.println("Couldn't locate config.json");
             return 1;
+        }
+        catch (NoSuchFieldException e)
+        {
+            System.out.println("Color in settings not found. Defaulting to white...");
+            TEXT_COLOR=Color.WHITE;
+            System.out.println("#### Banner Settings ####\n" + "Text_X: " + TEXT_X + " | Text_Y: " + TEXT_Y + " | Ava_X: " + AVATAR_X + " | Ava_Y: " + AVATAR_Y + " | Rounded: " + ROUNDED + " | Text Color:  "+ TEXT_COLOR);
         }
         /*catch (MalformedJsonException e)
         {
